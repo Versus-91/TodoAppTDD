@@ -6,31 +6,30 @@
 </head>
 
 <body>
-    {% verbatim %}
 
     <div class="container" id="app">
         <h1 class="title"> To-Do lists: {{message}} </h1>
-        <input @keyup.enter="addTodo" v-model="message" class="input" name="" placeholder="Enter a to-do item"
-            id="todo_text">
-        </input>
-        <p> test {{message}}</p>
+        <form method="POST">
+            {% csrf_token %}
+            <input name="todo_text" @keyup.enter="addTodo" v-model="message" class="input" name="todo_text"
+                placeholder="Enter a to-do item" id="todo_text" />
+        </form>
         <table id="todo_table" class="table is-bordered mt-5">
             <tr>
                 <th>
                     Task
                 </th>
             </tr>
-            <tr v-for="(item,index) in todoList">
+            <tr>
                 <td>
-                    {{(index+1) + ": "+item}}
+                    {{ new_todo_text }}
                 </td>
             </tr>
         </table>
     </div>
-    {% endverbatim %}
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script type="module">
+    <!-- <script type="module">
         const { createApp, ref, reactive } = Vue
         createApp({
             setup() {
@@ -47,7 +46,7 @@
                 }
             }
         }).mount('#app')
-    </script>
+    </script> -->
 </body>
 
 </html>
