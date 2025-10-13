@@ -21,7 +21,7 @@ class HomePageTest(TestCase):
         self.assertContains(response, '<form method="POST">')
         self.assertContains(response, '<input name="todo_text"')
     def test_save_todo(self):
-        response = self.client.post("/", data={'todo_text': "buy vegetables"})
+        self.client.post("/", data={'todo_text': "buy vegetables"})
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.description, 'buy vegetables.')
