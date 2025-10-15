@@ -25,3 +25,6 @@ class HomePageTest(TestCase):
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.description, 'buy vegetables.')
+    def test_redirect_after_post(self):
+        response = self.client.post("/", data={'todo_text': "buy vegetables"})
+        self.assertRedirects(response, "/")
