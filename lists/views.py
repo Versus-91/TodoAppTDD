@@ -12,4 +12,4 @@ def home_page(req):
         Item.objects.create(description=req.POST['todo_text'])
         return redirect('/')
     #     return HttpResponse(req.POST["todo_text"])
-    return render(req, "home.html", {"new_todo_text": req.POST.get("todo_text")})
+    return render(req, "home.html", {"items": Item.objects.all()})
