@@ -44,3 +44,12 @@ class NewVisitorTest(LiveServerTestCase):
                 if time.time() - start_time > MAX_WAIT:
                     raise
                 time.sleep(0.5)
+
+    def test_multiple_users_can_start_differetnt_lists(self):
+        self.browser.get(self.live_server_url)
+        inputbox = self.browser.find_element(By.ID, "todo_text")
+        inputbox.send_keys("Buy peacock feathers")
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_table("1: Buy peacock feathers")
+        edith_list_url = self.browser.current_url
+        self.assertRegex(edith_list_url, "/lists/.+")
