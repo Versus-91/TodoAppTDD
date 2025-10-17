@@ -27,4 +27,4 @@ class HomePageTest(TestCase):
         self.assertEqual(new_item.description, 'buy vegetables')
     def test_redirect_after_post(self):
         response = self.client.post("/", data={'todo_text': "buy vegetables"})
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, "/lists/unique-list/")
