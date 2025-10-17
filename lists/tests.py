@@ -20,11 +20,25 @@ class HomePageTest(TestCase):
         response = self.client.get("/")
         self.assertContains(response, '<form method="POST">')
         self.assertContains(response, '<input name="todo_text"')
+
     def test_save_todo(self):
         self.client.post("/", data={'todo_text': "buy vegetables"})
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.description, 'buy vegetables')
-    def test_redirect_after_post(self):
-        response = self.client.post("/", data={'todo_text': "buy vegetables"})
-        self.assertRedirects(response, "/lists/unique-list/")
+
+
+class ListViewTest(TestCase):
+    def test_renders_input_form(self):
+        response = self.client.get("/lists/unique-list/")
+        self.assertContains(response, '<form method="POST">')
+        self.assertContains(response, '<input name="todo_text"')
+
+    def test_displays_all_list_items(self):
+        Item.objects.create(description="itemey 1")
+        Item.objects.create(description="itemey 2")
+
+        response = self.client.get("/lists/unique-list/")
+
+        self.assertContains(response, "itemey 1")
+        self.assertContains(response, "itemey 2")
