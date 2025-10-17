@@ -10,6 +10,6 @@ from lists.models import Item
 def home_page(req):
     if req.method == "POST":
         Item.objects.create(description=req.POST['todo_text'])
-        return redirect('/')
+        return redirect('/lists/unique-list/')
     #     return HttpResponse(req.POST["todo_text"])
     return render(req, "home.html", {"items": Item.objects.all()})
