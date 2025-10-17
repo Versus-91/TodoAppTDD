@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
 
+MAX_WAIT = 5
+
 
 class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
@@ -27,11 +29,18 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys("Buy peacock feathers")
 
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(1)
+        self.wait_for_row_in_table("1: Buy peacock feathers")
 
-        table = self.browser.find_element(By.ID, "todo_table")
-        rows = table.find_elements(By.TAG_NAME, "tr")
-        self.assertTrue(
-            any(row.text == "1: Buy peacock feathers" for row in rows),'todo not added to the table.')
-
-
+    def wait_for_row_in_table(self, todo_text):
+        start_time = time.time()
+        while True:
+            try:
+                table = self.browser.find_element(By.ID, "todo_table")
+                rows = table.find_elements(By.TAG_NAME, "tr")
+                self.assertTrue(any(
+                    row.text == todo_text for row in rows), 'todo not added to the table.')
+                return
+            except:
+                if time.time() - start_time > MAX_WAIT:
+                    raise
+                time.sleep(0.5)
