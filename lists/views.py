@@ -7,9 +7,13 @@ from lists.models import Item
 # Create your views here.
 
 
-def home_page(req):
-    if req.method == "POST":
-        Item.objects.create(description=req.POST['todo_text'])
+def home_page(request):
+    if request.method == "POST":
+        Item.objects.create(description=request.POST['todo_text'])
         return redirect('/lists/unique-list/')
-    #     return HttpResponse(req.POST["todo_text"])
-    return render(req, "home.html", {"items": Item.objects.all()})
+    return render(request, "home.html", {"items": Item.objects.all()})
+
+
+def view_list(request):
+    items = Item.objects.all()
+    return render(request, "home.html", {"items": items})
