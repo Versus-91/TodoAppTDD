@@ -43,3 +43,24 @@ class ListViewTest(TestCase):
 
         self.assertContains(response, "itemey 1")
         self.assertContains(response, "itemey 2")
+    def test_save_retrival_list_listitem(self):
+        list = List()
+        list.save()
+        list_item_1 = Item()
+        list_item_1.description = "item 1"
+        list_item_1.list = list
+        list_item_1.save()
+
+        list_item_2 = Item()
+        list_item_2.description = "item 2"
+        list_item_2.list = list
+        list_item_2.save()
+        self.assertEqual(List.objects.get(), list)
+
+        items = Item.objects.all()
+        self.assertEqual(items.count(), 2)
+        self.assertEqual(items[0].description, "item 1")
+        self.assertEqual(items[1].description, "item 2")
+        self.assertEqual(items[0].list, list)
+        self.assertEqual(items[1].list, list)
+
