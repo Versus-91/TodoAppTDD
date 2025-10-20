@@ -14,7 +14,8 @@ def new_list(request):
     if request.method == "POST":
         list = List.objects.create()
         Item.objects.create(description=request.POST['todo_text'],list=list)
-        return redirect('/lists/unique-list/')
-def view_list(request):
-    items = Item.objects.all()
+        return redirect(f'/lists/{list.id}/')
+def view_list(request,list_id):
+    list = List.objects.get(id=list_id)
+    items = Item.objects.filter(list=list)
     return render(request, "list.html", {"items": items})

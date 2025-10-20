@@ -22,6 +22,6 @@ from lists.views import home_page, view_list,new_list
 urlpatterns = [
     path('', home_page, name='home'),
     path('lists/new', new_list, name='new_todo'),
-    path('lists/unique-list/', view_list, name='unique_list_page'),
+    path('lists/<int:list_id>/', view_list, name='unique_list_page'),
 
 ]

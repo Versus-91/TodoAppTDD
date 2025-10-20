@@ -28,10 +28,12 @@ class HomePageTest(TestCase):
         self.assertEqual(new_item.description, 'buy vegetables')
     def test_redirects_after_POST(self):
         response = self.client.post("/lists/new", data={"todo_text": "test todo item"})
-        self.assertRedirects(response, "/lists/unique-list/")
+        list = List.objects.get()
+        self.assertRedirects(response, f"/lists/{list.id}/")
 class ListViewTest(TestCase):
     def test_renders_input_form(self):
-        response = self.client.get("/lists/unique-list/")
+        list = List.objects.create()
+        response = self.client.get(f"/lists/{list.id}/")
         self.assertContains(response, '<form method="POST" action="/lists/new">')
         self.assertContains(response, '<input name="todo_text"')
 
@@ -40,7 +42,7 @@ class ListViewTest(TestCase):
         Item.objects.create(description="itemey 1",list=list)
         Item.objects.create(description="itemey 2",list=list)
 
-        response = self.client.get("/lists/unique-list/")
+        response = self.client.get(f"/lists/{list.id}/")
 
         self.assertContains(response, "itemey 1")
         self.assertContains(response, "itemey 2")
