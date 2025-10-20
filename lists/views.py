@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from lists.models import Item
+from lists.models import Item, List
 
 
 # Create your views here.
@@ -12,7 +12,8 @@ def home_page(request):
 
 def new_list(request):
     if request.method == "POST":
-        Item.objects.create(description=request.POST['todo_text'])
+        list = List.objects.create()
+        Item.objects.create(description=request.POST['todo_text'],list=list)
         return redirect('/lists/unique-list/')
 def view_list(request):
     items = Item.objects.all()

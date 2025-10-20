@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.http import HttpRequest
 
-from lists.models import Item
+from lists.models import Item, List
 from lists.views import home_page
 
 # Create your tests here.
@@ -32,12 +32,13 @@ class HomePageTest(TestCase):
 class ListViewTest(TestCase):
     def test_renders_input_form(self):
         response = self.client.get("/lists/unique-list/")
-        self.assertContains(response, '<form method="POST" action="/">')
+        self.assertContains(response, '<form method="POST" action="/lists/new">')
         self.assertContains(response, '<input name="todo_text"')
 
     def test_displays_all_list_items(self):
-        Item.objects.create(description="itemey 1")
-        Item.objects.create(description="itemey 2")
+        list = List.objects.create()
+        Item.objects.create(description="itemey 1",list=list)
+        Item.objects.create(description="itemey 2",list=list)
 
         response = self.client.get("/lists/unique-list/")
 
@@ -46,15 +47,8 @@ class ListViewTest(TestCase):
     def test_save_retrival_list_listitem(self):
         list = List()
         list.save()
-        list_item_1 = Item()
-        list_item_1.description = "item 1"
-        list_item_1.list = list
-        list_item_1.save()
-
-        list_item_2 = Item()
-        list_item_2.description = "item 2"
-        list_item_2.list = list
-        list_item_2.save()
+        list_item_1 = Item.objects.create(description="item 1",list=list)
+        list_item_2 = Item.objects.create(description="item 2",list=list)
         self.assertEqual(List.objects.get(), list)
 
         items = Item.objects.all()
