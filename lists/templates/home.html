@@ -37,19 +37,9 @@
         <h1 class="title"> To-Do lists: {{message}} </h1>
         <form method="POST" action="/lists/new">
             {% csrf_token %}
-            <input name="todo_text" @keyup.enter="addTodo" v-model="message" class="input" name="todo_text"
+            <input name="todo_text" @keyup.enter="addTodo" v-model="message" class="input"
                 placeholder="Enter a to-do item" id="todo_text" />
         </form>
-        <table id="todo_table" class="table is-bordered mt-5">
-            <tr>
-                <th>
-                    Task
-                </th>
-            </tr>
-          {% for item in items %}
-            <tr><td>{{ forloop.counter }}: {{ item.description }}</td></tr>
-          {% endfor %}
-        </table>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>

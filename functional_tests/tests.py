@@ -53,10 +53,10 @@ class NewVisitorTest(LiveServerTestCase):
         self.wait_for_row_in_table("1: Buy peacock feathers")
         edith_list_url = self.browser.current_url
         self.assertRegex(edith_list_url, "/lists/.+")
-        page_text = self.browser.find_element(By.TAG_NAME, "body").text
-        self.assertNotIn("Buy peacock feathers", page_text)
-
         self.browser.get(self.live_server_url)
+        page_text = self.browser.find_element(By.TAG_NAME, "body").text
+        inputbox = self.browser.find_element(By.ID, "todo_text")
+        self.assertNotIn("Buy peacock feathers", page_text)
         inputbox.send_keys("Buy milk")
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_table("1: Buy milk")
