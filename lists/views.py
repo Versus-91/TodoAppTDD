@@ -8,9 +8,6 @@ from lists.models import Item
 
 
 def home_page(request):
-    if request.method == "POST":
-        Item.objects.create(description=request.POST['todo_text'])
-        return redirect('/lists/unique-list/')
     return render(request, "home.html", {"items": Item.objects.all()})
 
 def new_list(request):
