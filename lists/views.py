@@ -18,7 +18,7 @@ def new_list(request):
 def view_list(request,list_id):
     list = List.objects.get(id=list_id)
     items = Item.objects.filter(list=list)
-    return render(request, "list.html", {"items": items})
+    return render(request, "list.html", {"items": items,"list": list})
 def add_item_to_list(request,list_id):
     list = List.objects.get(id=list_id)
     Item.objects.create(description=request.POST['description'],list=list)

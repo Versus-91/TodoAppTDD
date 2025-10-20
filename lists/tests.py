@@ -1,3 +1,4 @@
+from bottle import response
 from django.test import TestCase
 from django.http import HttpRequest
 
@@ -34,7 +35,7 @@ class ListViewTest(TestCase):
     def test_renders_input_form(self):
         list = List.objects.create()
         response = self.client.get(f"/lists/{list.id}/")
-        self.assertContains(response, '<form method="POST" action="/lists/new">')
+        self.assertContains(response, f'<form method="POST" action="/lists/{list.id}/add">')
         self.assertContains(response, '<input name="todo_text"')
 
     def test_displays_all_list_items(self):
@@ -73,5 +74,9 @@ class AddItemTest(TestCase):
             data={"description": "A new item for an existing list"},
         )
         self.assertRedirects(response, f"/lists/{correct_list.id}/")
+    def test_input_form(self):
+        list = List.objects.create()
+        response = self.client.get(f"/lists/{list.id}/")
+        self.assertContains(response, f'<form method="POST" action="/lists/{list.id}/add">')
 
 
