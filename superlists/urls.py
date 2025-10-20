@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from lists.views import home_page, view_list,new_list
+from lists.views import home_page, view_list,new_list,add_item_to_list
 
 urlpatterns = [
     path('', home_page, name='home'),
     path('lists/new', new_list, name='new_todo'),
     path('lists/<int:list_id>/', view_list, name='unique_list_page'),
+    path('lists/<int:list_id>/add', add_item_to_list, name='add_item_to_list'),
 
 ]

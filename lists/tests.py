@@ -59,4 +59,19 @@ class ListViewTest(TestCase):
         self.assertEqual(items[1].description, "item 2")
         self.assertEqual(items[0].list, list)
         self.assertEqual(items[1].list, list)
+class AddItemTest(TestCase):
+    def test_add_item(self):
+        list = List.objects.create()
+        self.client.post(f"/lists/{list.id}/add", data={'description': "add item"})
+        new_item = Item.objects.get()
+        self.assertEqual(new_item.list, list)
+        self.assertEqual(new_item.description, "add item")
+    def test_redirect_after_POST(self):
+        correct_list = List.objects.create()
+        response = self.client.post(
+            f"/lists/{correct_list.id}/add",
+            data={"description": "A new item for an existing list"},
+        )
+        self.assertRedirects(response, f"/lists/{correct_list.id}/")
+
 
