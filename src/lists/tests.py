@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from src.lists.models import Item, List
+from lists.models import Item, List
 
 
 # Create your tests here.
@@ -61,7 +61,7 @@ class ListViewTest(TestCase):
 class AddItemTest(TestCase):
     def test_add_item(self):
         list = List.objects.create()
-        self.client.post(f"/lists/{list.id}/add", data={'description': "add item"})
+        self.client.post(f"/lists/{list.id}/add", data={'todo_text': "add item"})
         new_item = Item.objects.get()
         self.assertEqual(new_item.list, list)
         self.assertEqual(new_item.description, "add item")
@@ -69,7 +69,7 @@ class AddItemTest(TestCase):
         correct_list = List.objects.create()
         response = self.client.post(
             f"/lists/{correct_list.id}/add",
-            data={"description": "A new item for an existing list"},
+            data={"todo_text": "A new item for an existing list"},
         )
         self.assertRedirects(response, f"/lists/{correct_list.id}/")
     def test_input_form(self):

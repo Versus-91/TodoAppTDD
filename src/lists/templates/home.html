@@ -35,7 +35,7 @@
     </nav>
     <div class="container" id="app">
         <h1 class="title"> To-Do lists: {{message}} </h1>
-        <form method="POST" action="/src/lists/new">
+        <form method="POST" action="/lists/new">
             {% csrf_token %}
             <input name="todo_text" @keyup.enter="addTodo" v-model="message" class="input"
                 placeholder="Enter a to-do item" id="todo_text" />

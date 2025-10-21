@@ -7,7 +7,7 @@
 
     <h1>Your To-Do list</h1>
     <h1>Start a new To-Do list</h1>
-     <form method="POST" action="/src/lists/{{list.id}}/add">
+     <form method="POST" action="/lists/{{list.id}}/add">
        <input name="todo_text" class="input" id="todo_text" placeholder="Enter a to-do item" />
        {% csrf_token %}
      </form>

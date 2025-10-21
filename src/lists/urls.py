@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.urls import path
 
-from src.lists.views import home_page, view_list,new_list,add_item_to_list
+from lists.views import home_page, view_list,new_list,add_item_to_list
 
 urlpatterns = [
     path('', home_page, name='home'),

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from src.lists.models import Item, List
+from lists.models import Item, List
 
 
 # Create your views here.
@@ -20,5 +20,5 @@ def view_list(request,list_id):
     return render(request, "list.html", {"items": items,"list": list})
 def add_item_to_list(request,list_id):
     list = List.objects.get(id=list_id)
-    Item.objects.create(description=request.POST['description'],list=list)
+    Item.objects.create(description=request.POST['todo_text'],list=list)
     return redirect(f'/lists/{list_id}/')
