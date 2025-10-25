@@ -2,8 +2,7 @@
 
 RUN python -m venv /venv
 ENV PATH="/venv/bin:$PATH"
-run pip install "django<6"
-copy src /src
+RUN pip install "django<6" gunicorn
+COPY src /src
 WORKDIR src
-
-CMD ["python", "manage.py","runserver"]
+CMD ["gunicorn", "--bind",":8888","superlists.wsgi:application"]
