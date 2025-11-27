@@ -23,9 +23,3 @@ A test-driven development learning project following the examples from ["Test-Dr
 ### Prerequisites
 - Python 3.8+
 - Django 5.x
-
-### Installation
-1. Clone the repository:
-```bash
-git clone https://github.com/your-username/tdd-python-learning.git
-cd tdd-python-learning
